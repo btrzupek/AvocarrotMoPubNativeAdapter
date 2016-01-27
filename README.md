@@ -36,15 +36,16 @@ In the UIViewController where your UITableView or UICollectionView is (where you
 
 ```
 // MoPub Initialization
-    MPStaticNativeAdRendererSettings *settings = [[MPStaticNativeAdRendererSettings alloc] init];
-    settings.renderingViewClass = [NativeAdCell class]; <-- Your native ad cell class
-    settings.viewSizeHandler = ^(CGFloat maxWidth) {
+MPStaticNativeAdRendererSettings *settings = [[MPStaticNativeAdRendererSettings alloc] init];
+settings.renderingViewClass = [NativeAdCell class]; <-- Your native ad cell class
+settings.viewSizeHandler = ^(CGFloat maxWidth) {
         return [self collectionView:self.collectionView layout:self.collectionView.collectionViewLayout sizeForItemAtIndexPath:[NSIndexPath indexPathForItem:0 inSection:0]];
     };
-    // MoPub renderer, here is where we insert our own renderer so that our class can be dynamically loaded
-    MPNativeAdRendererConfiguration *config = [AppNativeAdRenderer rendererConfigurationWithRendererSettings:settings];
-    _placer = [MPCollectionViewAdPlacer placerWithCollectionView:self.collectionView viewController:self rendererConfigurations:@[config]];
-    _placer.delegate = self;
+
+// MoPub renderer, here is where we insert our own renderer so that our class can be dynamically loaded
+MPNativeAdRendererConfiguration *config = [AppNativeAdRenderer rendererConfigurationWithRendererSettings:settings];
+_placer = [MPCollectionViewAdPlacer placerWithCollectionView:self.collectionView viewController:self rendererConfigurations:@[config]];
+_placer.delegate = self;
 ```
 
 Run your app, and if all is configured properly you will see the Avocarrot test ads.
